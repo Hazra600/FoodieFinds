@@ -20,6 +20,49 @@ let db;
   });
 })();
 
+async function getAllResturants() {
+  let query = "SELECT * FROM restaurants";
+  let response = await db.all(query, []);
+
+  return {resturants : response};
+}
+
+app.get('/restaurants', async(req, res) => {
+  try {
+    let resturantList = await getAllResturants();
+
+    if (resturantList.resturants.length === 0) {
+      res.status(404).json({message: "No restaurant found."});
+    }
+
+    res.status(200).json(resturantList);
+  } catch(error) {
+    res.status(500).json({error: error.message});
+  }
+});
+
+async function getAllResturantsById(id) {
+  let query = "SELECT * FROM restaurants where id = ?";
+  let response = await db.all(query, [id]);
+
+  return {resturants : response};
+}
+
+app.get('/restaurants/details/:id', async(req, res) => {
+  try {
+    let id = req.params.id;
+    let resturantList = await getAllResturantsById(id);
+
+    if (resturantList.resturants.length === 0) {
+      res.status(404).json({message: "No restaurant found."});
+    }
+
+    res.status(200).json(resturantList);
+  } catch(error) {
+    res.status(500).json({error: error.message});
+  }
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
