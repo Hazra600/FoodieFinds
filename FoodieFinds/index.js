@@ -32,12 +32,12 @@ app.get('/restaurants', async(req, res) => {
     let resturantList = await getAllResturants();
 
     if (resturantList.resturants.length === 0) {
-      res.status(404).json({message: "No restaurant found."});
+      return res.status(404).json({message: "No restaurant found."});
     }
 
     res.status(200).json(resturantList);
   } catch(error) {
-    res.status(500).json({error: error.message});
+    return res.status(500).json({error: error.message});
   }
 });
 
@@ -54,12 +54,12 @@ app.get('/restaurants/details/:id', async(req, res) => {
     let resturantList = await getAllResturantsById(id);
 
     if (resturantList.resturants.length === 0) {
-      res.status(404).json({message: "No restaurant found."});
+      return res.status(404).json({message: "No restaurant found."});
     }
 
     res.status(200).json(resturantList);
   } catch(error) {
-    res.status(500).json({error: error.message});
+    return res.status(500).json({error: error.message});
   }
 })
 
