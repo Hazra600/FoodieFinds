@@ -16,7 +16,7 @@ let db;
 (async () => {
   db = await open({
     filename: './FoodieFinds/database.sqlite',
-    driver: sqlite3.database,
+    driver: sqlite3.Database,
   });
 })();
 
